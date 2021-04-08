@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-hello-blog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/04/09/hello-blog/" class="article-date">
+  <time class="dt-published" datetime="2021-04-08T17:18:53.000Z" itemprop="datePublished">2021-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/04/09/hello-blog/">hello_blog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="1-数据库："><a href="#1-数据库：" class="headerlink" title="1.数据库："></a>1.数据库：</h1><h2 id="1-1数据库的索引："><a href="#1-1数据库的索引：" class="headerlink" title="1.1数据库的索引："></a>1.1数据库的索引：</h2><h3 id="1-1-1是什么？"><a href="#1-1-1是什么？" class="headerlink" title="1.1.1是什么？"></a>1.1.1是什么？</h3><p>索引其实是一种数据结构，能够帮助我们快速的检索数据库中的数据。</p>
+<h3 id="1-1-2索引的结构可以是？"><a href="#1-1-2索引的结构可以是？" class="headerlink" title="1.1.2索引的结构可以是？"></a>1.1.2索引的结构可以是？</h3><ul>
+<li>二叉树：容易不平衡</li>
+<li>Hash表：</li>
+<li>红黑树：n个数据红黑树磁盘io查找的次数为：log2n，还是很大，效率比较低，所以数据库就是使用B树</li>
+<li>BTree：多叉平衡树，由红黑树中每个节点和可以存储多个元素，每个节点的默认内存大小为16kb。</li>
+</ul>
+<p><img src="file://C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210330200149440.png?lastModify=1617794979" alt="image-20210330200149440"></p>
+<ul>
+<li>B+Tree：与B数的不同就是把节点中的data数据移动到叶子节点中。所以在上述继承上每一个节点中16kb的空间可以存储的元素量更大。数据库中的主键索引是BigInt（8个字节，64位），下一个节点的指针是6个字节。（最终存储一个索引需要14个字节，16kb/14b=1170个索引）1170  *1172  *16=20G</li>
+</ul>
+<p>常见的MySQL主要有两种结构：Hash索引和B+ Tree索引，我们使用的是InnoDB引擎，默认的是B+树。</p>
+<p><img src="file://C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210330200220019.png?lastModify=1617794989" alt="image-20210330200220019"></p>
+<h3 id="1-1-3目的是什么？"><a href="#1-1-3目的是什么？" class="headerlink" title="1.1.3目的是什么？"></a>1.1.3目的是什么？</h3><p>索引可以极大的提高数据的查询速度，但是会降低插入、删除、更新表的速度，因为在执行这些写总结：操作时，还要操作索引文件。</p>
+<p>创建唯一性索引，保证数据库表中每一行数据的唯一性。</p>
+<p>加速表和表之间的连接</p>
+<p>使用分组和排序子句进行数据检索时，可以显著减少查询中分组和排序的时间</p>
+<h3 id="1-1-4B-Tree索引和B树、Hash索引区别？"><a href="#1-1-4B-Tree索引和B树、Hash索引区别？" class="headerlink" title="1.1.4B+ Tree索引和B树、Hash索引区别？"></a>1.1.4B+ Tree索引和B树、Hash索引区别？</h3><ul>
+<li>和B树：（数据是存在叶子节点、数据节点之间是有指针指向）</li>
+</ul>
+<p>1.单一节点存储更多的元素，使得查询的IO次数更少；</p>
+<p>2.所有查询都要查找到叶子节点，查询性能稳定；</p>
+<p>3.所有叶子节点形成有序链表，便于实现范围查询。</p>
+<p>B（B-）树：多路搜索树，每个结点存储M/2到M个关键字，非叶子结点存储指向关键字范围的子结点；</p>
+<p>所有关键字在整颗树中出现，且只出现一次，非叶子结点可以命中；</p>
+<p>B+树：在B-树基础上，为叶子结点增加链表指针，所有关键字都在叶子结点中出现，非叶子结点作为叶子结点的索引；B+树总是到叶子结点才命中；</p>
+<ul>
+<li>和Hsah：</li>
+</ul>
+<p>哈希索引适合等值查询，但是无法进行范围查询 </p>
+<p>哈希索引没办法利用索引完成排序 </p>
+<p>哈希索引不支持多列联合索引的最左匹配规则 </p>
+<p>如果有大量重复键值的情况下，哈希索引的效率会很低，因为存在哈希碰撞问题。</p>
+<h3 id="1-1-5MySQL中有哪些索引，区别是什么，有什么影响？"><a href="#1-1-5MySQL中有哪些索引，区别是什么，有什么影响？" class="headerlink" title="1.1.5MySQL中有哪些索引，区别是什么，有什么影响？"></a>1.1.5<strong>MySQL中有哪些索引，区别是什么，有什么影响？</strong></h3><p>普通索引：(由关键字KEY或INDEX定义的索引)的唯一任务是加快对数据的访问速度。普通索引允许被索引的数据列包含重复的值。</p>
+<p>主键索引：是一种特殊的唯一索引，在一张表中只能定义一个主键索引，主键用于唯一标识一条记录，使用关键字PRIMARY KEY 来创建。</p>
+<p>唯一索引：如果能确定某个数据列将只包含彼此各不相同的值，在为这个数据列创建索引的时候就应该用关键字UNIQUE把它定义为一个唯一索引</p>
+<p>联合索引：索引可以覆盖多个数据列，如像INDEX(columnA, columnB)索引，这就是联合索引。</p>
+<h3 id="1-1-6普通索引，主键，唯一，单列-多列索引建索引的几大原则？"><a href="#1-1-6普通索引，主键，唯一，单列-多列索引建索引的几大原则？" class="headerlink" title="1.1.6普通索引，主键，唯一，单列/多列索引建索引的几大原则？"></a>1.1.6普通索引，主键，唯一，单列/多列索引建索引的几大原则？</h3><p><strong>1.最左前缀匹配原则，非常重要的原则</strong>，mysql会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。 </p>
+<p><strong>2.=和in可以乱序</strong>，比如a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式 。</p>
+<p><strong>3.尽量选择区分度高的列作为索引</strong>,区分度的公式是count(distinct col)/count(*)，表示字段不重复的比例，比例越大我们扫描的记录数越少，唯一键的区分度是1，而一些状态、性别字段可能在大数据面前区分度就是0，那可能有人会问，这个比例有什么经验值吗？使用场景不同，这个值也很难确定，一般需要join的字段我们都要求是0.1以上，即平均1条扫描10条记录 </p>
+<p><strong>4.索引列不能参与计算</strong>，保持列“干净”，比如from_unixtime(create_time) = ’2014-05-29’就不能使用到索引，原因很简单，b+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函数才能比较，显然成本太大。所以语句应该写成create_time = unix_timestamp(’2014-05-29’); </p>
+<p><strong>5.尽量的扩展索引，不要新建索引。</strong>比如表中已经有a的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可</p>
+<h2 id="1-2innodb和myisam的区别："><a href="#1-2innodb和myisam的区别：" class="headerlink" title="1.2innodb和myisam的区别："></a>1.2innodb和myisam的区别：</h2><h3 id="1-2-1对比？"><a href="#1-2-1对比？" class="headerlink" title="1.2.1对比？"></a>1.2.1对比？</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"><strong>MyISAM</strong></th>
+<th align="center"><strong>InnoDB</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>构成上的区别：</strong></td>
+<td align="center">每个MyISAM在磁盘上存储成三个文件。第一个文件的名字以表的名字开始，扩展名指出文件类型。   .frm文件存储表定义。   数据文件的扩展名为.MYD (MYData)。   索引文件的扩展名是.MYI (MYIndex)。</td>
+<td align="center">基于磁盘的资源是InnoDB表空间数据文件和它的日志文件，InnoDB 表的大小只受限于操作系统文件的大小，一般为 2GB。必须有自增的主键（节约时间空间）</td>
+</tr>
+<tr>
+<td align="center"><strong>事务处理上方面:</strong></td>
+<td align="center">不提供事务支持，MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快</td>
+<td align="center">InnoDB提供事务支持事务，外键（foreign key）等高级数据库功能</td>
+</tr>
+<tr>
+<td align="center"><strong>SELECT  UPDATE,INSERT，Delete操作</strong></td>
+<td align="center">如果执行大量的SELECT，MyISAM是更好的选择</td>
+<td align="center"><strong>1.<strong>如果你的数据执行大量的</strong>INSERT*<em>**或**</em>*UPDATE</strong>，出于性能方面的考虑，应该使用InnoDB表   <strong>2.DELETE  FROM table</strong>时，InnoDB不会重新建立表，而是一行一行的删除。   <strong>3.LOAD  TABLE FROM MASTER</strong>操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性（例如外键）的表不适用</td>
+</tr>
+<tr>
+<td align="center"><strong>全文索引</strong></td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td align="center"><strong>表的具体行数</strong></td>
+<td align="center"><strong>保存了整个表的行数</strong>，select count(<em>) from table,MyISAM只要简单的读出保存好的行数，注意的是，当count(</em>)语句包含  where条件时，两种表的操作是一样的</td>
+<td align="center">InnoDB 中不保存表的具体行数，也就是说，执行select count(*) from table时，InnoDB要扫描一遍整个表来计算有多少行</td>
+</tr>
+<tr>
+<td align="center"><strong>锁</strong></td>
+<td align="center">表锁</td>
+<td align="center">提供行锁、表锁，InnoDB表的行锁也不是绝对的，如果在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表（如update table set num=1 where name like “%aaa%”）</td>
+</tr>
+<tr>
+<td align="center"><strong>是否聚集</strong></td>
+<td align="center">非聚集索引，B+树的数据结构中存储的内容实际上是实际数据的地址值**。也就是说它的索引和实际数据是分开的，只不过使用索引指向了实际数据，数据文件是分离的，索引保存的是数据文件的指针</td>
+<td align="center">聚集索引，数据结构中存储的都是实际的数据，数据文件是和索引绑在一起的，必须要有主键，通过主键索引效率很高（辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据）</td>
+</tr>
+</tbody></table>
+<h3 id="1-1-2总结三个引擎："><a href="#1-1-2总结三个引擎：" class="headerlink" title="1.1.2总结三个引擎："></a>1.1.2总结三个引擎：</h3><p>InnoDB :  是Mysql的默认存储引擎，用于事务处理应用程序，支持外键。如果应用对事务的完整性有比较高的要求，在并发条件下要求数据的一致性，数据操作<strong>除了插入和查询之外，还包含很多的更新、删除操作</strong>，那么InnoDB存储引擎是比较合适的选择。InnoDB存储引擎除了有效的降低由于删除和更新导致的锁定， 还可以确保事务的完整提交和回滚，对于类似于计费系统或者财务系统等对数据准确性要求比较高的系统，InnoDB是最合适的选择。</p>
+<p>MyISAM ： 如果应用是以读操作和插入操作为主，只有很少的更新和删除操作，并且对事务的完整性、并发性要求不是很高，那么选择这个存储引擎是非常合适的。</p>
+<p>MEMORY：将所有数据保存在RAM中，在需要快速定位记录和其他类似数据环境下，可以提供几块的访问。MEMORY的缺陷就是对表的大小有限制，太大的表无法缓存在内存中，其次是要确保表的数据可以恢复，数据库异常终止后表中的数据是可以恢复的。MEMORY表通常用于更新不太频繁的小表，用以快速得到访问结果。</p>
+<h2 id="1-3数据库的事务："><a href="#1-3数据库的事务：" class="headerlink" title="1.3数据库的事务："></a>1.3数据库的事务：</h2><h3 id="1-3-1概念"><a href="#1-3-1概念" class="headerlink" title="1.3.1概念"></a>1.3.1概念</h3><p>​        多个操作构成一个逻辑上的整体，要么全部执行成功,要么全部不执行，不管事务是否执行成功,数据库总能保持一致性状态，数据库故障时也是！</p>
+<p>​        事务使系统能够更方便的进行故障恢复以及并发控制,从而保证数据库状态的一致性。</p>
+<h3 id="1-3-2事务特性ACID"><a href="#1-3-2事务特性ACID" class="headerlink" title="1.3.2事务特性ACID"></a>1.3.2事务特性ACID</h3><h4 id="传统事务："><a href="#传统事务：" class="headerlink" title="传统事务："></a>传统事务：</h4><p><strong>原子性（Atomicity）</strong><br> 原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。<br> <strong>一致性（Consistency）</strong><br> 事务前后数据的完整性必须保持一致。<br> <strong>隔离性（Isolation）</strong><br> 事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离。<br> <strong>持久性（Durability）</strong><br> 持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响</p>
+<p>在事务的ACID特性中,C即一致性是事务的根本追求,而对数据一致性的破坏主要来自两个方面</p>
+<ul>
+<li><p>1.事务的并发执行</p>
+</li>
+<li><p>2.事务故障或系统故障</p>
+<p>​    并发控制技术保证了事务的隔离性,使数据库的一致性状态不会因为并发执行的操作被破坏。<br>​    日志恢复技术保证了事务的原子性,使一致性状态不会因事务或系统故障被破坏。同时使已提交的对数据库的修改不会因系统崩溃而丢失,保证了事务的持久性。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407201643279.png" alt="image-20210407201643279"></p>
+</li>
+</ul>
+<h4 id="分布式事务："><a href="#分布式事务：" class="headerlink" title="分布式事务："></a>分布式事务：</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>CAP:<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407204304196.png" alt="image-20210407204304196"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407204255522.png" alt="image-20210407204255522"></p>
+<h5 id="两阶段提交协议"><a href="#两阶段提交协议" class="headerlink" title="两阶段提交协议"></a>两阶段提交协议</h5><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407204359008.png" alt="image-20210407204359008"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407204437693.png" alt="image-20210407204437693"></p>
+<h5 id="三阶段提交协议"><a href="#三阶段提交协议" class="headerlink" title="三阶段提交协议"></a>三阶段提交协议</h5><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407204818706.png" alt="image-20210407204818706"></p>
+<h4 id="分布式事务–柔性事务"><a href="#分布式事务–柔性事务" class="headerlink" title="分布式事务–柔性事务"></a>分布式事务–柔性事务</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205001717.png" alt="image-20210407205001717"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205024207.png" alt="image-20210407205024207"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205035854.png" alt="image-20210407205035854"></p>
+<h3 id="1-3-3常见的并发？"><a href="#1-3-3常见的并发？" class="headerlink" title="1.3.3常见的并发？"></a>1.3.3常见的并发？</h3><p>脏读、幻读、脏写、丢失更新</p>
+<h3 id="1-3-4事务的隔离级别？"><a href="#1-3-4事务的隔离级别？" class="headerlink" title="1.3.4事务的隔离级别？"></a>1.3.4事务的隔离级别？</h3><p>（1）事务具有隔离性,理论上来说事务之间的执行不应该相互产生影响,其对数据库的影响应该和它们串行执行时一样。</p>
+<p>（2）然而完全的隔离性会导致系统并发性能很低,降低对资源的利用率,因而实际上对隔离性的要求会有所放宽,这也会一定程度造成对数据库一致性要求降低</p>
+<p>（3）隔离级别：</p>
+<ul>
+<li>读未提交(READ UNCOMMITTED)</li>
+<li>读已提交(READ COMMITTED)</li>
+<li>可重复读(REPEATABLE READ)</li>
+<li>串行化(SERIALIZABLE)</li>
+</ul>
+<p>事务的隔离级别越低,可能出现的并发异常越多,但是通常而言系统能提供的并发能力越强。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407202339817.png" alt="image-20210407202339817"></p>
+<p>所有事务隔离级别都不允许出现脏写,而串行化可以避免所有可能出现的并发异常,但是会极大的降低系统的并发处理能力。</p>
+<h3 id="1-3-5并发控制技术"><a href="#1-3-5并发控制技术" class="headerlink" title="1.3.5并发控制技术"></a>1.3.5并发控制技术</h3><p><strong>并发控制技术</strong>是实现事务隔离性以及不同隔离级别的关键,实现方式有很多,按照其对可能冲突的操作采取的不同策略可以分为乐观并发控制和悲观并发控制两大类。</p>
+<ul>
+<li>乐观并发控制:对于并发执行可能冲突的操作,假定其不会真的冲突,允许并发执行,直到真正发生冲突时才去解决冲突,比如让事务回滚。</li>
+<li>悲观并发控制:对于并发执行可能冲突的操作,假定其必定发生冲突,通过让事务等待(锁)或者中止(时间戳排序)的方式使并行的操作串行执行。</li>
+<li>时间戳：</li>
+</ul>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407202617506.png" alt="image-20210407202617506"></p>
+<p><strong>基于封锁的并发控制：</strong>（三级封锁协议）</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205135958.png" alt="image-20210407205135958"></p>
+<p>核心思想:对于并发可能冲突的操作,比如读-写,写-读,写-写,通过锁使它们互斥执行。<br> 锁通常分为共享锁和排他锁两种类型</p>
+<ul>
+<li>1.共享锁(S):事务T对数据A加共享锁,其他事务只能对A加共享锁但不能加排他锁。</li>
+<li>2.排他锁(X):事务T对数据A加排他锁,其他事务对A既不能加共享锁也不能加排他锁</li>
+</ul>
+<p>基于锁的并发控制流程:</p>
+<ol>
+<li>事务根据自己对数据项进行的操作类型申请相应的锁(读申请共享锁,写申请排他锁)</li>
+<li>申请锁的请求被发送给锁管理器。锁管理器根据当前数据项是否已经有锁以及申请的和持有的锁是否冲突决定是否为该请求授予锁。</li>
+<li>若锁被授予,则申请锁的事务可以继续执行;若被拒绝,则申请锁的事务将进行等待,直到锁被其他事务释放。</li>
+</ol>
+<p>可能出现的问题:</p>
+<ul>
+<li>死锁:多个事务持有锁并互相循环等待其他事务的锁导致所有事务都无法继续执行。</li>
+<li>饥饿:数据项A一直被加共享锁,导致事务一直无法获取A的排他锁。</li>
+</ul>
+<p>对于可能发生冲突的并发操作,锁使它们由并行变为串行执行,是一种悲观的并发控制。</p>
+<p><strong>基于快照隔离的并发控制：</strong></p>
+<p>快照隔离是多版本并发控制(mvcc)的一种实现方式。</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205257173.png" alt="image-20210407205257173"></p>
+<p>其核心思想是:数据库为每个数据项维护多个版本(快照),每个事务只对属于自己的私有快照进行更新,在事务真正提交前进行有效性检查,使得事务正常提交更新或者失败回滚。</p>
+<p>由于快照隔离导致事务看不到其他事务对数据项的更新,为了避免出现丢失更新问题,可以采用以下两种方案避免：</p>
+<ul>
+<li>先提交者获胜:对于执行该检查的事务T,判断是否有其他事务已经将更新写入数据库,是则T回滚否则T正常提交。</li>
+<li>先更新者获胜:通过锁机制保证第一个获得锁的事务提交其更新,之后试图更新的事务中止。</li>
+</ul>
+<p>事务间可能冲突的操作通过数据项的不同版本的快照相互隔离,到真正要写入数据库时才进行冲突检测。因而这也是一种乐观并发控制。</p>
+<h3 id="1-3-6故障与故障恢复技术？"><a href="#1-3-6故障与故障恢复技术？" class="headerlink" title="1.3.6故障与故障恢复技术？"></a>1.3.6故障与故障恢复技术？</h3><p>故障分类：</p>
+<ul>
+<li>事务故障:比如非法输入,系统出现死锁,导致事务无法继续执行。</li>
+<li>系统故障:比如由于软件漏洞或硬件错误导致系统崩溃或中止。</li>
+</ul>
+<p>总结：</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407202931351.png" alt="image-20210407202931351"></p>
+<h2 id="1-4redis"><a href="#1-4redis" class="headerlink" title="1.4redis"></a>1.4redis</h2><p>​        Redis 是一个开源的使用C语言编写、可基于内存、可持久化的 Keg-Value数据库，和Memcached类似，它支持存储的value类型相对更多，包括sthring(字符串)、list(链表)、set(集合)、 zset(sorted set–有序集合)和hash (哈希类型)。</p>
+<p>●<strong>优势在于</strong><br><strong>速度快、性能极高，可持久化，丰富的数据类型，支持数据的备份</strong></p>
+<h4 id="速度快的原因："><a href="#速度快的原因：" class="headerlink" title="速度快的原因："></a>速度快的原因：</h4><p><img src="file://C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210314172146841.png?lastModify=1617801031" alt="image-20210314172146841"></p>
+<p>多路复用IO模型：</p>
+<p><img src="file://C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210314172238267.png?lastModify=1617801112" alt="image-20210314172238267"></p>
+<p><img src="file://C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210314172332092.png?lastModify=1617801039" alt="image-20210314172332092"></p>
+<h4 id="Memcached和Redis："><a href="#Memcached和Redis：" class="headerlink" title="Memcached和Redis："></a>Memcached和Redis：</h4><p>缓存中间件Memcached和Redis：</p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210314164745865.png" alt="image-20210314164745865"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210314164755524.png" alt="image-20210314164755524"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210314172534199.png" alt="image-20210314172534199"></p>
+<p><strong>Redis 与  Memcached区别</strong><br>1、类型<br>    Redis是一个开源的内存数据结构存储系统，用作<strong>数据库，缓存和消息代理</strong>。<br>    Memcached是一个免费的开源高性能分布式内存对象缓存系统，它通过减少数据库负载来加速动态Web应用程序。<br>2、数据结构(8种)<br>    Redis 支持字符串，散列，列表，集合，有序集，位图，超级日志和空间索引；而 Memcached支持<strong>字符串</strong>和<strong>整数</strong>。<br>3、执行速度<br>    Memcached (多线程)的读写速度高于 Redis。<br>4、复制<br>    Memcached不支持复制。而，Redis支持主从复制，允许从属Redis服务器成为主服务器的精确副本；来自任何Redis服务器的数据都可以复制到任意数量的从属服务器。<br>5、密钥长度<br>    Redis的密钥长度最大为2GB，而Memcached的密钥长度最大为250字节。<br>6、线程<br>    Redis 是单线程的；而Memcached是多线程的。</p>
+<h4 id="redis性能高的原因："><a href="#redis性能高的原因：" class="headerlink" title="redis性能高的原因："></a>redis性能高的原因：</h4><p>1、完全基于内存，<strong>数据存在内存中</strong>，类似于HashMap, HashMap 的优势就是查找和操作的时间复杂度都是O(1);<br>2、<strong>数据结构专门设计</strong>。比如SDS结构中字符串长度len,压缩链表等：(可以引申到redis的8大数据结构)；<br>3、采用<strong>单线程+辅助线程</strong>，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死被而导致的性能消耗，这里所说的单线程是工作线程是一个，但是会有其他辅助线程。比如哨兵线程，或者单线程延伸出的子线程等)<br>4.使用<strong>多路IO复用模型</strong>，非阻塞IO：多路I /O复用模型是利用 select、poll、epoll可以同时监察多个流的IO事件的能力，在空闲的时候，会把当前线程阻塞掉，当有一个或多个流有10事件时，就从阻塞态中唤醒，于是程序就会轮询一遍所有的流(epoll是只轮询那些真正发出了事件的流)，并且只依次顺序的处理就绪的流，这种做法就避免了大量的无用操作。<br>5、<strong>RESP</strong>(Redis的序列化协议)协议，文本协议，解析迅速，虽然浪费流量，这是折中吧：<br>6、<strong>持久化采用子线程进行磁盘操作</strong>。</p>
+<h2 id="1-5主存复制："><a href="#1-5主存复制：" class="headerlink" title="1.5主存复制："></a>1.5主存复制：</h2><h4 id="各日志之间关系："><a href="#各日志之间关系：" class="headerlink" title="各日志之间关系："></a>各日志之间关系：</h4><p>1.binlog日志：</p>
+<p>日志格式：</p>
+<pre><code>statement : 记录的是修改SQL语句
+row：记录的是每行实际数据的变更
+mixed：statement和row模式的混合
+</code></pre>
+<p>场景： 主从复制  恢复数据</p>
+<p>2.事务日志:<br><strong>redo log :  异常宕机或者介质故障后的数据恢复</strong>  </p>
+<p>写入时间：事务中sql语句执行后执行</p>
+<p><strong>redo log是InnoDB存储引擎层的日志</strong>，又称重做日志文件，<strong>用于记录事务操作的变化</strong>，记录的是数据修改之后的值，不管事务是否提交都会记录下来。有了redo log日志，那么在数据库进行异常重启的时候，可以根据redo log日志进行恢复，也就达到了crash-safe。</p>
+<p><strong>undo log主要为事务的回滚服务</strong>。在事务执行的过程中，除了记录redo log，还会记录一定量的undo log。undo log记录了数据在每个操作前的状态，如果事务执行过程中需要回滚，就可以根据undo log进行回滚操作。单个事务的回滚，只会回滚当前事务做的操作，并不会影响到其他的事务做的操作。</p>
+<p>从服务器（连接）—————————————&gt;主服务器（获取主服务器的bin-log（服务器的日志））</p>
+<p>从服务器复制得到relay-log（创建一个sql线程执行它）</p>
+<p>undo-log记录数据库数据更改之前的数据。</p>
+<p>redo-log：Innidb特有的一种日志！记录更改后的数据。</p>
+<h4 id="数据库的冷热备份："><a href="#数据库的冷热备份：" class="headerlink" title="数据库的冷热备份："></a>数据库的冷热备份：</h4><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205746994.png" alt="image-20210407205746994"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205758005.png" alt="image-20210407205758005"></p>
+<h2 id="1-6数据库的锁："><a href="#1-6数据库的锁：" class="headerlink" title="1.6数据库的锁："></a>1.6数据库的锁：</h2><ul>
+<li>行级锁：执行INSERT、UPDATE、DELETE、SELECT…..FOR UPDATE …使用，在commit和rollback时释放</li>
+<li>表级锁：<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407203841370.png" alt="image-20210407203841370"></li>
+<li>页级锁：<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407203853303.png" alt="image-20210407203853303"></li>
+<li>基于redis的分布式锁：<img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407203937895.png" alt="image-20210407203937895"></li>
+<li>封锁的粒度和类型</li>
+</ul>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205416946.png" alt="image-20210407205416946"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205425702.png" alt="image-20210407205425702"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407205429585.png" alt="image-20210407205429585"></p>
+<h2 id="1-7Redis持久化机制"><a href="#1-7Redis持久化机制" class="headerlink" title="1.7Redis持久化机制"></a>1.7Redis持久化机制</h2><p>RDB:快照（一次全量备份）</p>
+<p>AOF日志:数据操作修改指令记录日志。</p>
+<h2 id="1-8Redis集群模式和工作原理："><a href="#1-8Redis集群模式和工作原理：" class="headerlink" title="1.8Redis集群模式和工作原理："></a>1.8Redis集群模式和工作原理：</h2><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407210511535.png" alt="image-20210407210511535"></p>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210407210521901.png" alt="image-20210407210521901"></p>
+<h1 id="2-Linux："><a href="#2-Linux：" class="headerlink" title="2.Linux："></a>2.Linux：</h1><h2 id="1-Find找到特定的数据库文件："><a href="#1-Find找到特定的数据库文件：" class="headerlink" title="1.Find找到特定的数据库文件："></a>1.Find找到特定的数据库文件：</h2><p>1.1找到特定文件结尾的文件：</p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps1.jpg" alt="img"> </p>
+<p>1.2不知道路径查特定的文件：</p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps2.jpg" alt="img"> </p>
+<p>1.3找到以特定开头的所有文件</p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps3.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps4.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps5.jpg" alt="img"> </p>
+<h2 id="2-grep根据文件名检索文件："><a href="#2-grep根据文件名检索文件：" class="headerlink" title="2.grep根据文件名检索文件："></a>2.grep根据文件名检索文件：</h2><p>1、grep命令（该命令常用于分析一行的信息，若当中有我们所需要的信息，就将该行显示出来，该命令通常与管道命令一起使用，用于对一些命令的输出进行筛选加工等等）</p>
+<p>\1. grep [-acinv] [–color=auto] ‘查找字符串’ filename </p>
+<p>常见参数：</p>
+<p>· -a ：将binary文件以text文件的方式查找数据 </p>
+<p>· -c ：计算找到‘查找字符串’的次数 </p>
+<p>· -i ：忽略大小写的区别，即把大小写视为相同 </p>
+<p>· -v ：反向选择，即显示出没有‘查找字符串’内容的那一行 </p>
+<p>· # 例如： </p>
+<p>· # 取出文件/etc/man.config中包含MANPATH的行，并把找到的关键字加上颜色 </p>
+<p>· grep –color=auto ‘MANPATH’ /etc/man.config </p>
+<p>· # 把ls -l的输出中包含字母file（不区分大小写）的内容输出 </p>
+<p>· ls -l | grep -i file </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps6.jpg" alt="img"> </p>
+<p>2.1查找以特定字符开头包含指定字符的行：</p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps7.jpg" alt="img"> </p>
+<p>2.2|传递前一个指令的正确输出到下一个指令中</p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps8.jpg" alt="img"> </p>
+<p>注：在这里1中运算正确的输出会放在2里面参与运算，依次下推</p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps9.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps10.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps11.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps12.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps13.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps14.jpg" alt="img"> </p>
+<h2 id="3-awk对文件内容做统计"><a href="#3-awk对文件内容做统计" class="headerlink" title="3.awk对文件内容做统计"></a>3.awk对文件内容做统计</h2><p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps15.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps16.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps17.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps18.jpg" alt="img"> </p>
+<p>awk特别适合处理格式化的数据，特别适合处理表格发的数据：</p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps19.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps20.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps21.jpg" alt="img"></p>
+<h2 id="4-批量替换文档中的内容："><a href="#4-批量替换文档中的内容：" class="headerlink" title="4.批量替换文档中的内容："></a>4.批量替换文档中的内容：</h2><p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps22.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps23.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps24.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps25.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps26.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps27.jpg" alt="img"> </p>
+<p><img src="file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml3148\wps28.jpg" alt="img"> </p>
+<h2 id="5-chown命令（改变文件的所有者）"><a href="#5-chown命令（改变文件的所有者）" class="headerlink" title="5.chown命令（改变文件的所有者）"></a>5.chown命令（改变文件的所有者）</h2><p>用于改变文件的所有者，与chgrp命令的使用方法相同，只是修改的文件属性不同。</p>
+<h2 id="6-chmod命令（用于改变文件的权限）"><a href="#6-chmod命令（用于改变文件的权限）" class="headerlink" title="6.chmod命令（用于改变文件的权限）"></a>6.chmod命令（用于改变文件的权限）</h2><p>· chmod [-R] xyz 文件或目录 </p>
+<p>· -R：进行递归的持续更改，即连同子目录下的所有文件都会更改 </p>
+<p>同时，chmod还可以使用u（user）、g（group）、o（other）、a（all）和+（加入）、-（删除）、=（设置）跟rwx搭配来对文件的权限进行更改。</p>
+<h1 id="3-设计模式："><a href="#3-设计模式：" class="headerlink" title="3.设计模式："></a>3.设计模式：</h1><h2 id="2-1生产消费模型："><a href="#2-1生产消费模型：" class="headerlink" title="2.1生产消费模型："></a>2.1生产消费模型：</h2><p>缓冲区的作用就是为了平衡生产者和消费者的处理能力，起到一个数据缓存的作用，同时也达到了一个解耦的作用。</p>
+<h2 id="2-2简单工厂模式："><a href="#2-2简单工厂模式：" class="headerlink" title="2.2简单工厂模式："></a>2.2简单工厂模式：</h2><p><strong>主要解决：</strong>主要解决接口选择的问题。</p>
+<p><strong>何时使用：</strong>我们明确地计划不同条件下创建不同实例时。</p>
+<p><strong>如何解决：</strong>让其子类实现工厂接口，返回的也是一个抽象的产品。</p>
+<p><strong>优点：</strong> 1、一个调用者想创建一个对象，只要知道其名称就可以了。  2、扩展性高，如果想增加一个产品，只要扩展一个工厂类就可以。 3、屏蔽产品的具体实现，调用者只关心产品的接口。</p>
+<p><strong>缺点：</strong>每次增加一个产品时，都需要增加一个具体类和对象实现工厂，使得系统中类的个数成倍增加，在一定程度上增加了系统的复杂度，同时也增加了系统具体类的依赖。这并不是什么好事。</p>
+<p><strong>使用场景：</strong> 1、日志记录器：记录可能记录到本地硬盘、系统事件、远程服务器等，用户可以选择记录日志到什么地方。 2、数据库访问，当用户不知道最后系统采用哪一类数据库，以及数据库可能有变化时。 3、设计一个连接服务器的框架，需要三个协议，”POP3”、”IMAP”、”HTTP”，可以把这三个作为产品类，共同实现一个接口。</p>
+<p><strong>注意事项：</strong>作为一种创建类模式，在任何需要生成复杂对象的地方，都可以使用工厂方法模式。有一点需要注意的地方就是复杂对象适合使用工厂模式，而简单对象，特别是只需要通过 new 就可以完成创建的对象，无需使用工厂模式。如果使用工厂模式，就需要引入一个工厂类，会增加系统的复杂度。</p>
+<h2 id="2-3观察者模式"><a href="#2-3观察者模式" class="headerlink" title="2.3观察者模式:"></a>2.3观察者模式:</h2><p>观察者模式（Observer Pattern）</p>
+<p>情景：在许多设计中，经常会涉及多个对象都对一个对象中的数据变化感兴趣，而且这多个对象希望跟踪这个对象的变化。</p>
+<p>观察者模式包含了四种角色：</p>
+<p>主题（Subject）：主题是一个接口，该接口规定了具体主题需要实现的方法，比如，添加，删除观察者以及通知观察者数据跟新的方法</p>
+<p>观察者（Observer）:观察者是一个接口，该接口规定了具体观察者用来更新数据的方法。</p>
+<p>具体主题（ConcreteSuject）：具体主题是实现主题接口类的一个实例，该实例包含有可以经常发生变化的数据。具体主题要用一个集合来存放观察者的引用。</p>
+<p>具体观察者（ConcreteObserver）:具体观察者是实现观察者接口的一个实例。具体观察者包含有可以存放具体主题引用的接口变量，以便具体观察者让具体主题将自己的引用添加到具体主题的集合中去，使自己成为观察者，或让这个具体主题将自己删除。<br>UML类图：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200218215504130.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNzcxNjUxMg==,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>情景一：有一个大学生和一个海归都需要及时知道人才市场的职位需求信息</p>
+<p>实现代码：</p>
+<pre><code>package ObserverPattern;
+ 
+public interface Subject &#123;
+  public void addObserver(Observer o);
+  public void deleteObserver(Observer o);
+  public void notifyObserver();
+  public void giveNewMess(String string);
+&#125;
+
+package ObserverPattern;
+ 
+public interface Observer &#123;
+    public void hearTelphone(String mess);
+&#125;
+
+package ObserverPattern;
+ 
+import java.util.ArrayList;
+ 
+public class ConcreteSubject implements Subject &#123;
+   ArrayList&lt;Observer&gt; personlist;
+    String mess;
+    boolean changed;
+    ConcreteSubject()&#123;
+        personlist = new ArrayList&lt;Observer&gt;();
+        mess=&quot;&quot;;
+        changed=false;
+    &#125;
+    @Override
+    public void addObserver(Observer o) &#123;
+        // TODO Auto-generated method stub
+       if(!(personlist.contains(o))) &#123;
+           personlist.add(o);
+       &#125;
+    &#125;
+  
+    @Override
+    public void deleteObserver(Observer o) &#123;
+        // TODO Auto-generated method stub
+        if(personlist.contains(o)) &#123;
+            personlist.remove(o);
+        &#125;
+    &#125;
+ 
+    @Override
+    public void notifyObserver() &#123;
+        // TODO Auto-generated method stub
+     if(changed) &#123;
+         for(int i=0;i&lt;personlist.size();i++) &#123;
+             Observer observer=personlist.get(i);
+             observer.hearTelphone(mess);
+         &#125;
+         changed=false;
+     &#125;
+    &#125;
+    public void giveNewMess(String str) &#123;
+        if(str.equals(mess)) &#123;
+            changed=false;
+        &#125;else &#123;
+            mess=str;
+            changed=true;
+        &#125;
+    &#125;
+&#125;
+
+
+
+
+
+package ObserverPattern;
+ 
+public class ConcreteObserver implements Observer&#123;
+    Subject subject;
+    public ConcreteObserver(Subject subject) &#123;
+        // TODO Auto-generated constructor stub
+        this.subject=subject;
+        subject.addObserver(this);
+    &#125;
+    @Override
+    public void hearTelphone(String mess) &#123;
+        // TODO Auto-generated method stub
+        System.out.println(&quot;大学生收到消息&quot;+mess);
+        
+    &#125;
+ 
+&#125;
+
+package ObserverPattern;
+ 
+public class ConcreteObserver2 implements Observer&#123;
+     Subject subject;
+        public ConcreteObserver2(Subject subject) &#123;
+            // TODO Auto-generated constructor stub
+            this.subject=subject;
+            subject.addObserver(this);
+        &#125;
+        @Override
+        public void hearTelphone(String mess) &#123;
+            // TODO Auto-generated method stub
+            System.out.println(&quot;海归收到消息&quot;+mess);
+            
+        &#125;
+ 
+&#125;
+
+
+
+
+
+package ObserverPattern;
+ 
+public class Test &#123;
+  public static void main(String[] args) &#123;
+     //主题
+    Subject center=new ConcreteSubject();
+    //观察者，并将观察者注册在主题中
+    Observer observer=new ConcreteObserver(center);
+    Observer observer2=new ConcreteObserver2(center);
+    center.giveNewMess(&quot;腾讯公司需要十个程序员&quot;);
+    center.notifyObserver();
+&#125;
+&#125;
+</code></pre>
+<p>运行效果：</p>
+<p>观察者模式的优点：</p>
+<pre><code>具体主题和具体观察者是松耦合关系。由于主题接口依赖于观察者接口，因此具体主题只知道它的观察者是实现观察者某个类的实例，但并不知道是哪个类的实例，同样，在具体观察者中，只知道它依赖的主题是实现主题是某个类的实例，但不需要知道是哪个类的实例。
+观察者模式满足‘开-闭原则’。
+</code></pre>
+<p>观察者模式使用场景：</p>
+<pre><code>当一个对象的数据更新时需要通知其他对象，但这个对象又不希望和其他对象形成紧耦合。
+当一个对象的数据更新时，这个对象需要让其他对象各自更新自己的数据，但这个对象不知道具体有多少对象更新数据。
+</code></pre>
+<h2 id="2-4单例模式："><a href="#2-4单例模式：" class="headerlink" title="2.4单例模式："></a>2.4单例模式：</h2><p><strong>0.概述</strong></p>
+<p><strong>意图：</strong>保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+<p><strong>主要解决：</strong>一个全局使用的类频繁地创建与销毁。</p>
+<p><strong>何时使用：</strong>当您想控制实例数目，节省系统资源的时候。</p>
+<p><strong>如何解决：</strong>判断系统是否已经有这个单例，如果有则返回，如果没有则创建。</p>
+<p><strong>关键代码：</strong>构造函数是私有的。</p>
+<p><strong>应用实例：</strong></p>
+<ul>
+<li>1、一个班级只有一个班主任。</li>
+<li>2、Windows 是多进程多线程的，在操作一个文件的时候，就不可避免地出现多个进程或线程同时操作一个文件的现象，所以所有文件的处理必须通过唯一的实例来进行。</li>
+<li>3、一些设备管理器常常设计为单例模式，比如一个电脑有两台打印机，在输出的时候就要处理不能两台打印机打印同一个文件。</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>1、在内存里只有一个实例，减少了内存的开销，尤其是频繁的创建和销毁实例（比如管理学院首页页面缓存）。</li>
+<li>2、避免对资源的多重占用（比如写文件操作）。</li>
+</ul>
+<p><strong>缺点：</strong>没有接口，不能继承，与单一职责原则冲突，一个类应该只关心内部逻辑，而不关心外面怎么样来实例化。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>1、要求生产唯一序列号。 </li>
+<li>2、WEB 中的计数器，不用每次刷新都在数据库里加一次，用单例先缓存起来。</li>
+<li>3、创建的一个对象需要消耗的资源过多，比如 I/O 与数据库的连接等。</li>
+</ul>
+<p><strong>注意事项：</strong>getInstance() 方法中需要使用同步锁 synchronized (Singleton.class) 防止多线程同时进入造成 instance 被多次实例化。</p>
+<p><strong>1.单例模式的定义</strong></p>
+<p>单例模式确保某个类只有一个实例，而且自行实例化并向整个系统提供这个实例。</p>
+<p><strong>2.单例模式的特点</strong></p>
+<ul>
+<li>单例类只能有一个实例。</li>
+<li>单例类必须自己创建自己的唯一实例。</li>
+<li>单例类必须给所有其他对象提供这一实例。</li>
+</ul>
+<p><strong>3.单例模式的应用</strong></p>
+<ul>
+<li>在计算机系统中，线程池、缓存、日志对象、对话框、打印机、显卡的驱动程序对象常被设计成单例。</li>
+<li>这些应用都或多或少具有资源管理器的功能。每台计算机可以有若干个打印机，但只能有一个Printer  Spooler，以避免两个打印作业同时输出到打印机中。每台计算机可以有若干通信端口，系统应当集中管理这些通信端口，以避免一个通信端口同时被两个请求同时调用。总之，选择单例模式就是为了避免不一致状态。</li>
+</ul>
+<p><strong>4.单例模式的Java代码</strong></p>
+<p>单例模式分为懒汉式（需要才去创建对象）和饿汉式（创建类的实例时就去创建对象）。</p>
+<p><strong>5.饿汉式</strong></p>
+<ul>
+<li>属性实例化对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;饿汉模式：线程安全，耗费资源。</span><br><span class="line">public class HugerSingletonTest &#123;</span><br><span class="line">    &#x2F;&#x2F;该对象的引用不可修改</span><br><span class="line">    private static final HugerSingletonTest ourInstance &#x3D; new HugerSingletonTest();</span><br><span class="line">    public static HugerSingletonTest getInstance() &#123;</span><br><span class="line">        return ourInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    private HugerSingletonTest() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在静态代码块实例对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    private static Singleton ourInstance;</span><br><span class="line">    static &#123;</span><br><span class="line">         ourInstance &#x3D; new Singleton();</span><br><span class="line">    &#125;</span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        return ourInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析：饿汉式单例模式只要调用了该类，就会实例化一个对象，但有时我们并只需要调用该类中的一个方法，而不需要实例化一个对象，所以饿汉式是比较消耗资源的。</p>
+<p><strong>6.懒汉式</strong></p>
+<ul>
+<li>非线程安全</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    private static Singleton ourInstance;</span><br><span class="line">    public static Singleton getInstance() &#123;</span><br><span class="line">        if (null &#x3D;&#x3D; ourInstance) &#123;</span><br><span class="line">            ourInstance &#x3D; new Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">   		return ourInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析：如果有两个线程同时调用getInstance()方法，则会创建两个实例化对象。所以是非线程安全的。</p>
+<ul>
+<li>线程安全：给方法加锁</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    private static Singleton ourInstance;</span><br><span class="line">    public synchronized static Singleton getInstance() &#123;</span><br><span class="line">        if (null &#x3D;&#x3D; ourInstance) &#123;</span><br><span class="line">            ourInstance &#x3D; new Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        return ourInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析：如果有多个线程调用getInstance()方法，当一个线程获取该方法，而其它线程必须等待，消耗资源。</p>
+<ul>
+<li>线程安全：双重检查锁（同步代码块）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    private static Singleton ourInstance;</span><br><span class="line">    public synchronized static Singleton getInstance() &#123;</span><br><span class="line">        if (null &#x3D;&#x3D; ourInstance) &#123;</span><br><span class="line">            synchronized (Singleton.class) &#123;</span><br><span class="line">                if (null &#x3D;&#x3D; ourInstance) &#123;</span><br><span class="line">                    ourInstance &#x3D; new Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return ourInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析：为什么需要双重检查锁呢？因为第一次检查是确保之前是一个空对象，而非空对象就不需要同步了，空对象的线程然后进入同步代码块，如果不加第二次空对象检查，两个线程同时获取同步代码块，一个线程进入同步代码块，另一个线程就会等待，而这两个线程就会创建两个实例化对象，所以需要在线程进入同步代码块后再次进行空对象检查，才能确保只创建一个实例化对象。</p>
+<ul>
+<li>线程安全：静态内部类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    private static class SingletonHodler &#123;</span><br><span class="line">        private static Singleton ourInstance &#x3D; new Singleton();</span><br><span class="line">    &#125;</span><br><span class="line">    public synchronized static Singleton getInstance() &#123;</span><br><span class="line">        return SingletonHodler.ourInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析：利用静态内部类，谋个线程在调用该方法时会创建一个实例化对象。</p>
+<ul>
+<li>线程安全：枚举</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">enum SingletonTest &#123;  </span><br><span class="line">    INSTANCE;  </span><br><span class="line">    public void whateverMethod() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析：枚举的方式是《Effective  Java》书中提倡的方式，它不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象，但是在枚举中的其他任何方法的线程安全由程序员自己负责。还有防止上面的通过反射机制调用私用构造器。不过，由于Java1.5中才加入enum特性，所以使用的人并不多。</p>
+<p><strong>7.指令重排序</strong></p>
+<ul>
+<li>我们再来思考一个问题，就是懒汉式的双重检查版本的单例模式，它一定是线程安全的吗？我会毫不犹豫的告诉你—不一定，因为在JVM的编译过程中会存在指令重排序的问题。</li>
+<li>其实创建一个对象，往往包含三个过程。<br>对于singleton = new Singleton()，这不是一个原子操作，在 JVM 中包含的三个过程。<ul>
+<li>1&gt;给 singleton 分配内存</li>
+<li>2&gt;调用 Singleton 的构造函数来初始化成员变量，形成实例</li>
+<li>3&gt;将singleton对象指向分配的内存空间（执行完这步 singleton才是非 null 了）</li>
+</ul>
+</li>
+<li>但是，由于JVM会进行指令重排序，所以上面的第二步和第三步的顺序是不能保证的，最终的执行顺序可能是 1-2-3 也可能是 1-3-2。如果是 1-3-2，则在 3 执行完毕、2 未执行之前，被l另一个线程抢占了，这时 instance  已经是非 null 了（但却没有初始化），所以这个线程会直接返回 instance，然后使用，那肯定就会报错了。</li>
+<li>针对这种情况，我们有什么解决方法呢？那就是把singleton声明成 volatile ，改进后的懒汉式线程安全（双重检查锁）的代码如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">    &#x2F;&#x2F;volatile的作用是：保证可见性、禁止指令重排序，但不能保证原子性</span><br><span class="line">    private volatile static Singleton ourInstance;</span><br><span class="line">    public synchronized static Singleton getInstance() &#123;</span><br><span class="line">        if (null &#x3D;&#x3D; ourInstance) &#123;</span><br><span class="line">            synchronized (Singleton.class) &#123;</span><br><span class="line">                if (null &#x3D;&#x3D; ourInstance) &#123;</span><br><span class="line">                    ourInstance &#x3D; new Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return ourInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    private Singleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>8.单例模式在JDK8源码中的使用</strong></p>
+<p>当然JDK源码中使用了大量的设计模式，那哪些地方使用了单例设计模式呢？</p>
+<ul>
+<li>Runtime类部分源码如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;饿汉式单例设计模式</span><br><span class="line">public class Runtime &#123;</span><br><span class="line">    private static Runtime currentRuntime &#x3D; new Runtime();</span><br><span class="line">    public static Runtime getRuntime() &#123;</span><br><span class="line">        return currentRuntime;</span><br><span class="line">    &#125;</span><br><span class="line">    private Runtime() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;省略很多行</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-5MVC模式"><a href="#2-5MVC模式" class="headerlink" title="2.5MVC模式"></a>2.5MVC模式</h2><p>MVC 模式代表 Model-View-Controller（模型-视图-控制器） 模式。这种模式用于应用程序的分层开发。</p>
+<ul>
+<li><strong>Model（模型）</strong> - 模型代表一个存取数据的对象或 JAVA POJO。它也可以带有逻辑，在数据变化时更新控制器。</li>
+<li><strong>View（视图）</strong> - 视图代表模型包含的数据的可视化。</li>
+<li><strong>Controller（控制器）</strong> - 控制器作用于模型和视图上。它控制数据流向模型对象，并在数据变化时更新视图。它使视图与模型分离开。</li>
+</ul>
+<p><img src="https://www.runoob.com/wp-content/uploads/2014/08/1200px-ModelViewControllerDiagram2.svg_.png" alt="img"></p>
+<h2 id="2-6观察者模式"><a href="#2-6观察者模式" class="headerlink" title="2.6观察者模式"></a>2.6观察者模式</h2><p>当对象间存在一对多关系时，则使用观察者模式（Observer Pattern）。比如，当一个对象被修改时，则会自动通知依赖它的对象。观察者模式属于行为型模式。</p>
+<p><strong>意图：</strong>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</p>
+<p><strong>主要解决：</strong>一个对象状态改变给其他对象通知的问题，而且要考虑到易用和低耦合，保证高度的协作。</p>
+<p><strong>何时使用：</strong>一个对象（目标对象）的状态发生改变，所有的依赖对象（观察者对象）都将得到通知，进行广播通知。</p>
+<p><strong>如何解决：</strong>使用面向对象技术，可以将这种依赖关系弱化。</p>
+<p><strong>关键代码：</strong>在抽象类里有一个 ArrayList 存放观察者们。</p>
+<p><strong>应用实例：</strong> 1、拍卖的时候，拍卖师观察最高标价，然后通知给其他竞价者竞价。 2、西游记里面悟空请求菩萨降服红孩儿，菩萨洒了一地水招来一个老乌龟，这个乌龟就是观察者，他观察菩萨洒水这个动作。</p>
+<p><strong>优点：</strong> 1、观察者和被观察者是抽象耦合的。 2、建立一套触发机制。</p>
+<p><strong>缺点：</strong> 1、如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。 2、如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。 3、观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>一个抽象模型有两个方面，其中一个方面依赖于另一个方面。将这些方面封装在独立的对象中使它们可以各自独立地改变和复用。</li>
+<li>一个对象的改变将导致其他一个或多个对象也发生改变，而不知道具体有多少对象将发生改变，可以降低对象之间的耦合度。</li>
+<li>一个对象必须通知其他对象，而并不知道这些对象是谁。</li>
+<li>需要在系统中创建一个触发链，A对象的行为将影响B对象，B对象的行为将影响C对象……，可以使用观察者模式创建一种链式触发机制。</li>
+</ul>
+<p><strong>注意事项：</strong> 1、JAVA 中已经有了对观察者模式的支持类。 2、避免循环引用。 3、如果顺序执行，某一观察者错误会导致系统卡壳，一般采用异步方式。</p>
+<h1 id="4-SpringBoot："><a href="#4-SpringBoot：" class="headerlink" title="4.SpringBoot："></a>4.SpringBoot：</h1><h2 id="Spring-Boot-最大的优势是什么呢？"><a href="#Spring-Boot-最大的优势是什么呢？" class="headerlink" title="Spring Boot 最大的优势是什么呢？"></a><strong>Spring Boot 最大的优势是什么呢？</strong></h2><p>Spring Boot 的最大的优势是“约定优于配置“。“约定优于配置“是一种软件设计范式，开发人员按照约定的方式来进行编程，可以减少软件开发人员需做决定的数量，获得简单的好处，而又不失灵活性。</p>
+<h2 id="Spring-Boot-中-“约定优于配置“的具体产品体现在哪里？"><a href="#Spring-Boot-中-“约定优于配置“的具体产品体现在哪里？" class="headerlink" title="Spring Boot 中 “约定优于配置“的具体产品体现在哪里？"></a>Spring Boot 中 “约定优于配置“的具体产品体现在哪里？</h2><p>答：Spring Boot Starter、Spring Boot Jpa  都是“约定优于配置“的一种体现。都是通过“约定优于配置“的设计思路来设计的，Spring Boot Starter  在启动的过程中会根据约定的信息对资源进行初始化；Spring Boot Jpa 通过约定的方式来自动生成 Sql ，避免大量无效代码编写。</p>
+<h2 id="Spring-Boot-Starter-的工作原理是什么？"><a href="#Spring-Boot-Starter-的工作原理是什么？" class="headerlink" title="Spring Boot Starter 的工作原理是什么？"></a><strong>Spring Boot Starter 的工作原理是什么？</strong></h2><p>答：Spring Boot  在启动的时候会干这几件事情：</p>
+<p>Spring Boot 在启动时会去依赖的 Starter 包中寻找 resources/META-INF/spring.factories 文件，然后根据文件中配置的 Jar 包去扫描项目所依赖的 Jar 包。</p>
+<p>根据 spring.factories 配置加载 AutoConfigure 类</p>
+<p>根据 @Conditional 注解的条件，进行自动配置并将 Bean 注入 Spring Context</p>
+<p>总结一下，其实就是 Spring Boot 在启动的时候，按照约定去读取 Spring Boot Starter  的配置信息，再根据配置信息对资源进行初始化，并注入到 Spring 容器中。这样 Spring Boot启动完毕后，就已经准备好了一切资源，使用过程中直接注入对应 Bean 资源即可。</p>
+<h2 id="一、Spring-Boot-的自动配置是如何实现的？"><a href="#一、Spring-Boot-的自动配置是如何实现的？" class="headerlink" title="一、Spring Boot 的自动配置是如何实现的？"></a>一、Spring Boot 的自动配置是如何实现的？</h2><p>Spring Boot 项目的启动注解是：@SpringBootApplication，其实它就是由下面三个注解组成的：</p>
+<p>@Configuration</p>
+<p>@ComponentScan</p>
+<p>@EnableAutoConfiguration</p>
+<p>其中 @EnableAutoConfiguration 是实现自动配置的入口，该注解又通过 @Import  注解导入了AutoConfigurationImportSelector，在该类中加载 META-INF/spring.factories  的配置信息。然后筛选出以 EnableAutoConfiguration 为 key 的数据，加载到 IOC 容器中，实现自动配置功能！</p>
+<h2 id="二、什么是嵌入式服务器？我们为什么要使用嵌入式服务器呢"><a href="#二、什么是嵌入式服务器？我们为什么要使用嵌入式服务器呢" class="headerlink" title="二、什么是嵌入式服务器？我们为什么要使用嵌入式服务器呢?"></a><strong>二、什么是嵌入式服务器？我们为什么要使用嵌入式服务器呢?</strong></h2><p>思考一下在你的虚拟机上部署应用程序需要些什么。</p>
+<p>第一步：安装 Java</p>
+<p>第二部：安装 Web 或者是应用程序的服务器（Tomat/Wbesphere/Weblogic 等等）</p>
+<p>第三部：部署应用程序 war 包</p>
+<p>如果我们想简化这些步骤，应该如何做呢？</p>
+<p>让我们来思考如何使服务器成为应用程序的一部分？</p>
+<p>你只需要一个安装了 Java 的虚拟机，就可以直接在上面部署应用程序了，</p>
+<p>是不是很爽？</p>
+<p>这个想法是嵌入式服务器的起源。</p>
+<p>当我们创建一个可以部署的应用程序的时候，我们将会把服务器（例如，tomcat）嵌入到可部署的服务器中。</p>
+<p>例如，对于一个 Spring Boot 应用程序来说，你可以生成一个包含 Embedded Tomcat 的应用程序 jar。你就可以像运行正常 Java 应用程序一样来运行 web 应用程序了。</p>
+<p>嵌入式服务器就是我们的可执行单元包含服务器的二进制文件（例如，tomcat.jar）。</p>
+<h2 id="三、微服务同时调用多个接口，怎么支持事务的啊？"><a href="#三、微服务同时调用多个接口，怎么支持事务的啊？" class="headerlink" title="三、微服务同时调用多个接口，怎么支持事务的啊？"></a><strong>三、微服务同时调用多个接口，怎么支持事务的啊？</strong></h2><p>支持分布式事务，可以使用Spring Boot集成 Aatomikos来解决，但是我一般不建议这样使用，因为使用分布式事务会增加请求的响应时间，影响系统的TPS。一般在实际工作中，会利用消息的补偿机制来处理分布式的事务。</p>
+<h2 id="四、shiro和oauth还有cas他们之间的关系是什么？问下您公司权限是如何设计，还有就是这几个概念的区别。"><a href="#四、shiro和oauth还有cas他们之间的关系是什么？问下您公司权限是如何设计，还有就是这几个概念的区别。" class="headerlink" title="四、shiro和oauth还有cas他们之间的关系是什么？问下您公司权限是如何设计，还有就是这几个概念的区别。"></a><strong>四、shiro和oauth还有cas他们之间的关系是什么？问下您公司权限是如何设计，还有就是这几个概念的区别</strong>。</h2><p>cas和oauth是一个解决单点登录的组件，shiro主要是负责权限安全方面的工作，所以功能点不一致。但往往需要单点登陆和权限控制一起来使用，所以就有 cas+shiro或者oauth+shiro这样的组合。</p>
+<p>token一般是客户端登录后服务端生成的令牌，每次访问服务端会进行校验，一般保存到内存即可，也可以放到其他介质；redis可以做Session共享，如果前端web服务器有几台负载，但是需要保持用户登录的状态，这场景使用比较常见。</p>
+<p>我们公司使用oauth+shiro这样的方式来做后台权限的管理，oauth负责多后台统一登录认证，shiro负责给登录用户赋予不同的访问权限。</p>
+<h2 id="五、各服务之间通信，对Restful和Rpc这2种方式如何做选择？"><a href="#五、各服务之间通信，对Restful和Rpc这2种方式如何做选择？" class="headerlink" title="五、各服务之间通信，对Restful和Rpc这2种方式如何做选择？"></a><strong>五、各服务之间通信，对Restful和Rpc这2种方式如何做选择？</strong></h2><p>在传统的SOA治理中，使用rpc的居多；Spring  Cloud默认使用restful进行服务之间的通讯。rpc通讯效率会比restful要高一些，但是对于大多数公司来讲，这点效率影响甚微。我建议使用restful这种方式，易于在不同语言实现的服务之间通讯。</p>
+<h2 id="六、怎么设计无状态服务？"><a href="#六、怎么设计无状态服务？" class="headerlink" title="六、怎么设计无状态服务？"></a><strong>六、怎么设计无状态服务？</strong></h2><p>对于无状态服务，首先说一下什么是状态：如果一个数据需要被多个服务共享，才能完成一笔交易，那么这个数据被称为状态。进而依赖这个“状态”数据的服务被称为有状态服务，反之称为无状态服务。</p>
+<p>那么这个无状态服务原则并不是说在微服务架构里就不允许存在状态，表达的真实意思是要把有状态的业务服务改变为无状态的计算类服务，那么状态数据也就相应的迁移到对应的“有状态数据服务”中。</p>
+<p>场景说明：例如我们以前在本地内存中建立的数据缓存、Session缓存，到现在的微服务架构中就应该把这些数据迁移到分布式缓存中存储，让业务服务变成一个无状态的计算节点。迁移后，就可以做到按需动态伸缩，微服务应用在运行时动态增删节点，就不再需要考虑缓存数据如何同步的问题。</p>
+<h2 id="七、Spring-Cache-三种常用的缓存注解和意义？"><a href="#七、Spring-Cache-三种常用的缓存注解和意义？" class="headerlink" title="七、Spring Cache 三种常用的缓存注解和意义？"></a><strong>七、Spring Cache 三种常用的缓存注解和意义？</strong></h2><p>@Cacheable ，用来声明方法是可缓存，将结果存储到缓存中以便后续使用相同参数调用时不需执行实际的方法，直接从缓存中取值。</p>
+<p>@CachePut，使用 @CachePut 标注的方法在执行前，不会去检查缓存中是否存在之前执行过的结果，而是每次都会执行该方法，并将执行结果以键值对的形式存入指定的缓存中。</p>
+<p>@CacheEvict，是用来标注在需要清除缓存元素的方法或类上的，当标记在一个类上时表示其中所有的方法的执行都会触发缓存的清除操作。</p>
+<h2 id="八、Spring-Boot-如何设置支持跨域请求？"><a href="#八、Spring-Boot-如何设置支持跨域请求？" class="headerlink" title="八、Spring Boot 如何设置支持跨域请求？"></a><strong>八、Spring Boot 如何设置支持跨域请求？</strong></h2><p>现代浏览器出于安全的考虑， HTTP 请求时必须遵守同源策略，否则就是跨域的 HTTP 请求，默认情况下是被禁止的，IP（域名）不同、或者端口不同、协议不同（比如 HTTP、HTTPS）都会造成跨域问题。</p>
+<p>一般前端的解决方案有：</p>
+<p>使用 JSONP 来支持跨域的请求，JSONP 实现跨域请求的原理简单的说，就是动态创建<script>标签，然后利用<script>的 SRC 不受同源策略约束来跨域获取数据。缺点是需要后端配合输出特定的返回信息。</p>
+<p>利用反应代理的机制来解决跨域的问题，前端请求的时候先将请求发送到同源地址的后端，通过后端请求转发来避免跨域的访问。</p>
+<p>后来 HTML5 支持了 CORS 协议。CORS 是一个 W3C 标准，全称是”跨域资源共享”（Cross-origin  resource sharing），允许浏览器向跨源服务器，发出 XMLHttpRequest 请求，从而克服了 AJAX  只能同源使用的限制。它通过服务器增加一个特殊的  Header[Access-Control-Allow-Origin]来告诉客户端跨域的限制，如果浏览器支持 CORS、并且判断 Origin  通过的话，就会允许 XMLHttpRequest 发起跨域请求。</p>
+<p>前端使用了 CORS 协议，就需要后端设置支持非同源的请求，Spring Boot 设置支持非同源的请求有两种方式。</p>
+<p>第一，配置 CorsFilter。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">pblic class GlobalCorsConfig &#123;    </span><br><span class="line">    @Bean    </span><br><span class="line">    public CorsFilter corsFilter() &#123;        </span><br><span class="line">        CorsConfiguration config &#x3D; new CorsConfiguration();          </span><br><span class="line">    config.addAllowedOrigin(&quot;*&quot;);          </span><br><span class="line">        config.setAllowCredentials(true);         </span><br><span class="line">        config.addAllowedMethod(&quot;*&quot;);          </span><br><span class="line">        config.addAllowedHeader(&quot;*&quot;);          </span><br><span class="line">        config.addExposedHeader(&quot;*&quot;);        </span><br><span class="line">        UrlBasedCorsConfigurationSource configSource &#x3D; new UrlBasedCorsConfigurationSource();     </span><br><span class="line">        configSource.registerCorsConfiguration(&quot;&#x2F;**&quot;, config);        </span><br><span class="line">        return new CorsFilter(configSource);    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p> 需要配置上述的一段代码。第二种方式稍微简单一些。</p>
+<p>第二，在启动类上添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Application extends WebMvcConfigurerAdapter &#123;     </span><br><span class="line">    @Override      </span><br><span class="line">    public void addCorsMappings(CorsRegistry registry) &#123;          </span><br><span class="line">        registry.addMapping(&quot;&#x2F;**&quot;)                  </span><br><span class="line">                .allowCredentials(true)                  </span><br><span class="line">                .allowedHeaders(&quot;*&quot;)                  </span><br><span class="line">                .allowedOrigins(&quot;*&quot;)                  </span><br><span class="line">                .allowedMethods(&quot;*&quot;);      </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h2 id="九、JPA-和-Hibernate-有哪些区别？JPA-可以支持动态-SQL-吗？"><a href="#九、JPA-和-Hibernate-有哪些区别？JPA-可以支持动态-SQL-吗？" class="headerlink" title="九、JPA 和 Hibernate 有哪些区别？JPA 可以支持动态 SQL 吗？"></a><strong>九、JPA 和 Hibernate 有哪些区别？JPA 可以支持动态 SQL 吗？</strong></h2><p>JPA本身是一种规范，它的本质是一种ORM规范（不是ORM框架，因为JPA并未提供ORM实现，只是制定了规范）因为JPA是一种规范，所以，只是提供了一些相关的接口，但是接口并不能直接使用，JPA底层需要某种JPA实现，Hibernate 是 JPA 的一个实现集。</p>
+<p>JPA 是根据实体类的注解来创建对应的表和字段，如果需要动态创建表或者字段，需要动态构建对应的实体类，再重新调用Jpa刷新整个Entity。动态SQL，mybatis支持的最好，jpa也可以支持，但是没有Mybatis那么灵活。</p>
+<h2 id="十、Spring-、Spring-Boot-和-Spring-Cloud-的关系"><a href="#十、Spring-、Spring-Boot-和-Spring-Cloud-的关系" class="headerlink" title="十、Spring 、Spring Boot 和 Spring Cloud 的关系?"></a><strong>十、Spring 、Spring Boot 和 Spring Cloud 的关系?</strong></h2><p>Spring 最初最核心的两大核心功能 Spring Ioc 和 Spring Aop 成就了 Spring，Spring  在这两大核心的功能上不断的发展，才有了 Spring 事务、Spring Mvc 等一系列伟大的产品，最终成就了 Spring 帝国，到了后期  Spring 几乎可以解决企业开发中的所有问题。</p>
+<p>Spring Boot 是在强大的 Spring 帝国生态基础上面发展而来，发明 Spring Boot 不是为了取代 Spring ,是为了让人们更容易的使用 Spring 。</p>
+<p>Spring Cloud 是一系列框架的有序集合。它利用 Spring Boot  的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用 Spring  Boot 的开发风格做到一键启动和部署。</p>
+<p>Spring Cloud 是为了解决微服务架构中服务治理而提供的一系列功能的开发框架，并且 Spring Cloud 是完全基于  Spring Boot 而开发，Spring Cloud 利用 Spring Boot  特性整合了开源行业中优秀的组件，整体对外提供了一套在微服务架构中服务治理的解决方案。</p>
+<p>用一组不太合理的包含关系来表达它们之间的关系。</p>
+<p>Spring ioc/aop &gt; Spring &gt; Spring Boot &gt; Spring Cloud </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/09/hello-blog/" data-id="ckn95dzti0000qwqn7i4q9ge4" data-title="hello_blog" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/04/09/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2021-04-08T17:07:37.514Z" itemprop="datePublished">2021-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/04/09/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/09/hello-world/" data-id="ckn951cix00008cqn41q0a294" data-title="Hello World" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/09/hello-blog/">hello_blog</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/09/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
